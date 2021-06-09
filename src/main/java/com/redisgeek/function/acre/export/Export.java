@@ -1,12 +1,10 @@
 package com.redisgeek.function.acre.export;
 
 import com.azure.core.credential.TokenCredential;
-import com.azure.core.http.policy.HttpLogDetailLevel;
 import com.azure.core.management.AzureEnvironment;
 import com.azure.core.management.profile.AzureProfile;
 import com.azure.identity.AzureAuthorityHosts;
 import com.azure.identity.EnvironmentCredentialBuilder;
-import com.azure.resourcemanager.AzureResourceManager;
 import com.azure.resourcemanager.redisenterprise.RedisEnterpriseManager;
 import com.azure.resourcemanager.redisenterprise.models.Cluster;
 import com.azure.resourcemanager.redisenterprise.models.Database;
@@ -24,26 +22,20 @@ public class Export implements Function<Mono<Optional<String>>, Mono<String>> {
     @Value("${acre_id}")
     private String acre_id;
 
-    @Value("${acre_db_id}")
-    private String acre_db_id;
-
     @Value("${rg_name}")
     private String rg_name;
 
-//    @Value("${accountSasUri}")
-//    private String accountSasUri;
-
-    @Value("${blobSasUri}")
-    private String blobSasUri;
+    @Value("${blobSas}")
+    private String blobSas;
 
     @Value("${storageKey}")
     private String storageKey;
 
-//    @Value("${storageName}")
-//    private String storageName;
-//
-//    @Value("${AZURE_SUBSCRIPTION_ID}")
-//    private String azure_subscription_id;
+    @Value("${storageName}")
+    private String storageName;
+
+    @Value("${storageContainerName}")
+    private String storageContainer;
 
     public Mono<String> apply(Mono<Optional<String>> request) {
         try {
@@ -53,18 +45,16 @@ public class Export implements Function<Mono<Optional<String>>, Mono<String>> {
             AzureProfile profile = new AzureProfile(AzureEnvironment.AZURE);
             RedisEnterpriseManager redisEnterpriseManager = RedisEnterpriseManager
                     .authenticate(credential, profile);
-//            AzureResourceManager.Authenticated azureResourceManager = AzureResourceManager.configure()
-//                    .withLogLevel(HttpLogDetailLevel.BASIC)
-//                    .authenticate(credential, profile);
 
             Cluster cluster = redisEnterpriseManager.redisEnterprises().getById(acre_id);
-            Database database = redisEnterpriseManager.databases().getById(acre_db_id);
+            Database database = redisEnterpriseManager.databases().getById(acre_id + "/databases/default");
+            String blobSasUri = String.format("https://%s.blob.core.windows.net/%s%s", storageName, storageContainer, blobSas);
             ExportClusterParameters exportClusterParameters =
                     new ExportClusterParameters().withSasUri(blobSasUri + ";" + storageKey);
             exportClusterParameters.validate();
             redisEnterpriseManager
                     .databases()
-                    .export(rg_name,cluster.name(), database.name(), exportClusterParameters);
+                    .export(rg_name, cluster.name(), database.name(), exportClusterParameters);
             return Mono.just("Export Complete");
         } catch (Exception e) {
             return Mono.just(e.getMessage());

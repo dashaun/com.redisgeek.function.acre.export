@@ -24,9 +24,9 @@
         <azure.functions.maven.plugin.version>1.11.0</azure.functions.maven.plugin.version>
         <azure.functions.java.library.version>1.4.2</azure.functions.java.library.version>
         <functionAppName>acre-export-function</functionAppName>
-        <functionResourceGroup>acre-export-function-rg</functionResourceGroup>
+        <functionResourceGroup></functionResourceGroup>
         <stagingDirectory>${project.build.directory}/azure-functions/${functionAppName}</stagingDirectory>
-        <start-class>com.example.DemoApplication</start-class>
+        <start-class>com.redisgeek.function.acre.export.Application</start-class>
     </properties>
 
     <dependencies>

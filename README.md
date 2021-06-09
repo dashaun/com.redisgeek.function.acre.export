@@ -1,3 +1,9 @@
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+
 # com.redisgeek.function.acre.export
 ## Azure Function for ACRE Export
 
@@ -11,6 +17,23 @@ A function to create an export from a give ACRE instance built using:
 
 ## Getting Started
 
+** Prerequisites:**
+
+* Azure Cache for Redis Enterprise
+* Storage Account
+* Storage Container
+
+The function gets is configuration from the environment variables.
+The variables are shown in example.local.settings.json.
+The values will be grabbed from the prerequisite deployed resources.
+
+When deployed to Azure, you will also need to provide:
+
+- AZURE_SUBSCRIPTION_ID
+- AZURE_TENANT_ID
+- AZURE_CLIENT_SECRET
+- AZURE_CLIENT_ID
+
 ### Clone the Repository w/ Submodules
 
 To install this example application, run the following commands:
@@ -19,49 +42,50 @@ git clone git@github.com:redisgeek/com.redisgeek.function.acre.export.git
 cd com.redisgeek.function.acre.export.git
 ```
 
-### Update the settings
+### Copy configuration template
 
 ```bash
-cp src/main/azure/
+cp src/main/azure/example.local.settings.json src/main/azure/local.settings.json
 ```
+>Update local.settings.json with your values
 
-Set the environment secrets
+*local.settings.json* is just used for local development.
+
+### Run the function locally
+
 ```bash
-dotnet user-secrets init
-dotnet user-secrets set CacheConnection "localhost,abortConnect=false,ssl=false,allowAdmin=false,password="
+./mvnw clean package azure-functions:run
 ```
-
-Start the Docker Compose application:
- ```bash
- docker-compose up
- ```
-
-Start the app (in separate shell)
-```bash
-dotnet run
-```
-
-Access the Swashbuckle/Swagger UI:
-[https://localhost:5001/swagger/index.html](https://localhost:5001/swagger/index.html)
+>Runs the function locally, but connects to Azure Resource Manager
 
 ## See Also
 
-Quick Tutorial on Redis' Powerful Modules:
+[acre-terraform-cron-replication](https://github.com/redisgeek/acre-terraform-cron-replication)
 
-* [RedisJSON Tutorial](https://developer.redislabs.com/howtos/redisjson)
-* [RediSearch Tutorial](https://developer.redislabs.com/howtos/redisearch)
+<!-- ROADMAP -->
+## Roadmap
 
-## Help
+See the [open issues](https://github.com/redisgeek/acre-terraform-cron-replication/issues) for a list of proposed features (and known issues).
 
-Please post any questions and comments on the [Redis Discord Server](https://discord.gg/redis),
-and remember to visit our [Redis Developer Page](https://developer.redislabs.com) for awesome tutorials,
-project and tips.
+<!-- CONTRIBUTING -->
+## Contributing
 
+Pull-requests are welcomed!
+
+<!-- LICENSE -->
 ## License
 
-[MIT Licence](http://www.opensource.org/licenses/mit-license.html)
+Distributed under the MIT License. See `LICENSE` for more information.
 
-## Credit
-
-- [DaShaun Carter](https://github.com/dashaun) @ [Redis Labs](https://redislabs.com)
-- [Guy Royse](https://github.com/guyroyse) @ [Redis Labs](https://redislabs.com)
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/redisgeek/com.redisgeek.function.acre.export.svg?style=for-the-badge
+[contributors-url]: https://github.com/redisgeek/com.redisgeek.function.acre.export/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/redisgeek/com.redisgeek.function.acre.export.svg?style=for-the-badge
+[forks-url]: https://github.com/redisgeek/com.redisgeek.function.acre.export/network/members
+[stars-shield]: https://img.shields.io/github/stars/redisgeek/com.redisgeek.function.acre.export.svg?style=for-the-badge
+[stars-url]: https://github.com/redisgeek/com.redisgeek.function.acre.export/stargazers
+[issues-shield]: https://img.shields.io/github/issues/redisgeek/com.redisgeek.function.acre.export.svg?style=for-the-badge
+[issues-url]: https://github.com/redisgeek/com.redisgeek.function.acre.export/issues
+[license-shield]: https://img.shields.io/github/license/redisgeek/com.redisgeek.function.acre.export.svg?style=for-the-badge
+[license-url]: https://github.com/redisgeek/com.redisgeek.function.acre.export/blob/master/LICENSE.txt
