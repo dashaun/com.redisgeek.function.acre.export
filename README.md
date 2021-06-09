@@ -7,13 +7,14 @@
 # com.redisgeek.function.acre.export
 ## Azure Function for ACRE Export
 
-A function to create an export from a give ACRE instance built using:
+A function to create an export from a given ACRE instance.
+
+### Built with:
 
 * [Spring Cloud Function](https://spring.io/projects/spring-cloud-function)
 * [Azure SDK for Java](https://github.com/Azure/azure-sdk-for-java)
 
-
-## | [Getting Started](#getting-started) | [See Also](#see-also) | [Help](#help) | [License](#license) | [Credit](#credit) |
+## | [Getting Started](#getting-started) | [See Also](#see-also)  | [License](#license) |
 
 ## Getting Started
 
