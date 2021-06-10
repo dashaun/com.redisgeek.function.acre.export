@@ -175,9 +175,9 @@
                                 <resource>
                                     <directory>${project.basedir}/src/main/azure
                                     </directory>
-                                    <excludes>
-                                        <exclude>**/*local.settings.json</exclude>
-                                    </excludes>
+                                    <includes>
+                                        <include>**/host.json</include>
+                                    </includes>
                                 </resource>
                             </resources>
                         </configuration>
