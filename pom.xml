@@ -176,7 +176,7 @@
                                     <directory>${project.basedir}/src/main/azure
                                     </directory>
                                     <includes>
-                                        <include>**/host.json</include>
+                                        <include>**</include>
                                     </includes>
                                 </resource>
                             </resources>
