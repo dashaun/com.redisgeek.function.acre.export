@@ -36,7 +36,6 @@ public class Export implements Function<Mono<Optional<String>>, Mono<String>> {
     private String storageContainerName;
 
     public Mono<String> apply(Mono<Optional<String>> request) {
-        try {
             TokenCredential credential = new EnvironmentCredentialBuilder()
                     .authorityHost(AzureAuthorityHosts.AZURE_PUBLIC_CLOUD)
                     .build();
@@ -58,8 +57,5 @@ public class Export implements Function<Mono<Optional<String>>, Mono<String>> {
                     .databases()
                     .export(resourceGroupName, cluster.name(), database.name(), exportClusterParameters);
             return Mono.just("Export Complete");
-        } catch (Exception e) {
-            return Mono.just(e.getMessage());
-        }
     }
 }
